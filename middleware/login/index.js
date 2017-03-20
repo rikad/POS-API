@@ -9,7 +9,7 @@ export const loginAction = (req, keyword) => {
     return new Promise((resolve, reject) => {
         if(keyword != null) {
             model.findOne(keyword, (err, user) => {
-                if(err) res.json({code : 500, message : 'Internal Server Error'})
+                if(err) reject('Internal Server Error')
 
                 if(user) {
                     user.pass != req.body.password ? reject("Oop's User Not Found") : ''
@@ -21,7 +21,7 @@ export const loginAction = (req, keyword) => {
                     let { username, email, avatarPicture, wallPicture} = user
                     resolve({ username, email, avatarPicture, wallPicture, token : token })
                 } else {
-                    reject('Internal Server Error')
+                    reject("Oop's User Not Found")
                 }
             })
         } else {
