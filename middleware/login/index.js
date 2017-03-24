@@ -1,18 +1,15 @@
 import jwt from 'jsonwebtoken';
 import config from '../../config';
-import { userModel } from '../../models/user.models.js';
-
 const secret = config.auth.secret;
-const model = userModel();
 
-export const loginAction = (req, keyword) => {
+export const loginAction = (req, keyword, model) => {
     return new Promise((resolve, reject) => {
-        if(keyword != null) {
+        if(keyword) {
             model.findOne(keyword, (err, user) => {
                 if(err) reject('Internal Server Error')
 
                 if(user) {
-                    user.pass != req.body.password ? reject("Oop's User Not Found") : ''
+                    user.password != req.body.password ? reject("Oop's User Not Found") : ''
 
                     const token = jwt.sign(user, secret, {
                         expiresIn : 604800

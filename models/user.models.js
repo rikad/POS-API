@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 
 export const userModel = () => {
     const schema = new mongoose.Schema({
-        username : String,
-        email : String,
-        pass : String,
+        username : { type: String, unique: true },
+        email : { type: String, unique: true },
+        password : String,
         bio : {
             name : {
                 first : String,
